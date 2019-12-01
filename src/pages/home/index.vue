@@ -14,24 +14,24 @@
       indicator-color="rgba(255,255,255,0.3)"
       indicator-active-color="#fff"
     >
-      <block v-for="(item, index) in 3" :key="index">
+      <block v-for="(item, index) in swiperdata" :key="index">
         <swiper-item>
-          <image src="https://api.zbztb.cn/pyg/banner2.png"></image>
+          <image :src="item.image_src"></image>
         </swiper-item>
       </block>
     </swiper>
 
     <!-- 分类 -->
     <ul class="cates">
-      <li v-for="(item, index) in 4" :key="index">
-        <img src="https://api.zbztb.cn/pyg/icon_index_nav_2@2x.png" alt="">
+      <li v-for="(item, index) in catitems" :key="index">
+        <img :src="item.image_src" alt="">
       </li>
     </ul>
 
     <!-- 楼层 -->
     <ul>
-      <li class="floor-item" v-for="(item2, index2) in 3" :key="index2">
-        <img src="https://api.zbztb.cn/pyg/pic_floor01_title.png" alt="">
+      <li class="floor-item" v-for="(item2, index2) in floordata" :key="index2">
+        <img src="" alt="">
         <div class="products">
           <img src="https://api.zbztb.cn/pyg/pic_floor01_1@2x.png" alt="">
           <div class="right">
@@ -44,7 +44,55 @@
 </template>
 
 <script>
-export default {}
+export default {
+  data () {
+    return {
+      swiperdata: [],
+      catitems: [],
+      floordata: []
+    }
+  },
+  created () {
+    this.getSwiperdata()
+    this.getCatitems()
+    this.getFloordata()
+  },
+  methods: {
+    getSwiperdata () {
+      wx.request({
+        url: 'https://ugo.botue.com/api/public/v1/home/swiperdata',
+        success: res => {
+          console.log(res)
+          if (res.data.meta.status === 200) {
+            this.swiperdata = res.data.message
+          }
+        }
+      })
+    },
+    getCatitems () {
+      wx.request({
+        url: 'https://ugo.botue.com/api/public/v1/home/catitems',
+        success: res => {
+          console.log(res)
+          if (res.data.meta.status === 200) {
+            this.catitems = res.data.message
+          }
+        }
+      })
+    },
+    getFloordata () {
+      wx.request({
+        url: 'https://ugo.botue.com/api/public/v1/home/floordata',
+        success: res => {
+          console.log(res)
+          if (res.data.meta.status === 200) {
+            this.floordata = res.data.message
+          }
+        }
+      })
+    }
+  }
+}
 </script>
 
 <style lang="less">
