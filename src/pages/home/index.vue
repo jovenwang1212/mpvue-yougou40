@@ -1,11 +1,6 @@
 <template>
   <div>
-    <div class="header">
-      <div class="inner">
-        <icon type="search" size="16" color="#bbb"> </icon>
-        <span>搜索</span>
-      </div>
-    </div>
+    <SearchLink/>
     <!-- 轮播图 -->
     <swiper
       indicator-dots
@@ -46,8 +41,11 @@
 </template>
 
 <script>
-
+import SearchLink from '@/components/SearchLink'
 export default {
+  components: {
+    SearchLink
+  },
   data () {
     return {
       swiperdata: [],
@@ -87,30 +85,6 @@ export default {
 </script>
 
 <style lang="less">
-.header {
-  height: 100rpx;
-  background-color: #eb4450;
-  display: flex;
-  align-items: center;
-  padding: 0 16rpx;
-  .inner {
-    flex: 1;
-    height: 60rpx;
-    background-color: #fff;
-    border-radius: 8rpx;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    span {
-      color: #bbb;
-    }
-    icon {
-      margin-right: 16rpx;
-      margin-top: 10rpx;
-    }
-  }
-}
-
 swiper image {
   width: 100%;
   height: 340rpx;
