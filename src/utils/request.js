@@ -10,6 +10,7 @@ function request (options) {
   return new Promise((resolve, reject) => {
     wx.request({
       url: BASE_URL + options.url,
+      data: options.data,
       success: res => {
         let { meta, message } = res.data
         if (meta.status === 200) {

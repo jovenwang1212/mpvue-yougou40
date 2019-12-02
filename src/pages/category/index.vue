@@ -19,7 +19,8 @@
           <li class="cate2" v-for="(cate2, index2) in categories[activeIndex].children" :key="index2">
             <p v-if="cate2.children.length">/<span>{{cate2.cat_name}}</span>/</p>
             <ul>
-              <li class="cate3" v-for="(cate3, index3) in cate2.children" :key="index3">
+              <li class="cate3" v-for="(cate3, index3) in cate2.children" :key="index3"
+              @click="toSearchList(cate3.cat_name)">
                 <img
                   :src="cate3.cat_icon"
                   alt=""
@@ -50,6 +51,9 @@ export default {
     this.getCategories()
   },
   methods: {
+    toSearchList (catName) {
+      wx.navigateTo({ url: '/pages/search_list/main?query=' + catName })
+    },
     getCategories () {
       this.$request({
         url: '/api/public/v1/categories'
