@@ -2,7 +2,8 @@
 export default {}
 </script>
 
-<style lang="less">
+<style>
+@import url('./css/iconfont.css');
 page {
   color: #333;
 }

@@ -20,7 +20,7 @@
     </div>
 
     <ul class="goods-list" :style="{marginTop:isFixed?'220rpx':'0'}">
-      <li class="goods" v-for="(item, index) in goodsList" :key="index">
+      <li class="goods" v-for="(item, index) in goodsList" :key="index" @click="toItem(item.goods_id)">
         <img
           :src="item.goods_small_logo"
           alt=""
@@ -68,6 +68,10 @@ export default {
     this.queryGoodsList()
   },
   methods: {
+    // 去到商品详情
+    toItem (id) {
+      wx.navigateTo({ url: '/pages/item/main?id=' + id })
+    },
     reload () {
       //  加载第一页
       this.pageNum = 1

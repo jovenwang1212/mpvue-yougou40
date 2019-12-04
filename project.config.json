@@ -48,7 +48,14 @@
 					"id": 1,
 					"name": "搜索列表",
 					"pathName": "pages/search_list/main",
-					"query": "query=小米",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 2,
+					"name": "商品详情",
+					"pathName": "pages/item/main",
+					"query": "id=542",
 					"scene": null
 				}
 			]
