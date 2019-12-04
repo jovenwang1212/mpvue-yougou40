@@ -51,12 +51,8 @@ export default {
     }
   },
   onLoad (options) {
-    this.pageNum = 1
-    //  是否在请求中，如果在请求中，就不发请求
-    this.isRequest = false
     this.query = options.query
-    // 查询商品列表
-    this.queryGoodsList()
+    this.reload()
   },
   onPullDownRefresh () {
     this.isFixed = false
@@ -95,7 +91,7 @@ export default {
           pagesize: PAGE_SIZE
         }
       }).then(data => {
-        console.log(data)
+        // console.log(data)
         this.goodsList = [...this.goodsList, ...data.goods]
         // 判断是否到了最后一页
         if (this.goodsList.length === data.total) {
@@ -111,72 +107,6 @@ export default {
 </script>
 
 <style lang="less">
-.topHeader{
-  position: static;
-  top:0;
-  width: 100%;
-  background-color: #fff;
-}
-.goods-list{
-  margin-top:220rpx;
-}
-.header {
-  height: 120rpx;
-  padding: 0 16rpx;
-  display: flex;
-  align-items: center;
-  background-color: #eee;
-  position: relative;
-  input {
-    height: 60rpx;
-    flex: 1;
-    border-radius: 6rpx;
-    background-color: #fff;
-    padding-left: 78rpx;
-  }
-  icon {
-    position: absolute;
-    left: 44rpx;
-  }
-}
-
-.filter-menu {
-  display: flex;
-  justify-content: space-around;
-  height: 100rpx;
-  align-items: center;
-  .active {
-    color: #eb4450;
-  }
-}
-.goods {
-  height: 260rpx;
-  border-top: 1px solid #ddd;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  padding: 0 20rpx;
-  img {
-    width: 200rpx;
-    height: 200rpx;
-  }
-  .right {
-    flex: 1;
-    margin-left: 24rpx;
-    p {
-      margin-bottom: 70rpx;
-    }
-    .price {
-      color: #eb4450;
-      font-size: 24rpx;
-      .num {
-        font-size: 36rpx;
-      }
-    }
-  }
-}
-.hasBtm{
-  text-align: center;
-  color:#666;
-}
+@import url('../../css/base.less');
+@import url('./index.less');
 </style>
