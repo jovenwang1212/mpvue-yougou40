@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div class="header">
+    <div class="topHeader" :style="{position:isFixed?'fixed':'static'}">
+      <div class="header">
       <icon type="search" size="16" color="#bdbdbd"> </icon>
       <input type="text" v-model="query" @confirm="reload" confirm-type="search"/>
     </div>
@@ -16,8 +17,9 @@
         {{ item }}
       </li>
     </ul>
+    </div>
 
-    <ul class="goods-list">
+    <ul class="goods-list" :style="{marginTop:isFixed?'220rpx':'0'}">
       <li class="goods" v-for="(item, index) in goodsList" :key="index">
         <img
           :src="item.goods_small_logo"
@@ -43,31 +45,38 @@ export default {
       menuList: ['综合', '销量', '价格'],
       acitveIndex: 0,
       query: '',
-      pageNum: 1,
       goodsList: [],
-      // 是否在请求中，如果在请求中，就不发请求
-      isRequest: false,
-      isLastPage: false
+      isLastPage: false,
+      isFixed: false
     }
   },
+  onLoad (options) {
+    this.pageNum = 1
+    //  是否在请求中，如果在请求中，就不发请求
+    this.isRequest = false
+    this.query = options.query
+    // 查询商品列表
+    this.queryGoodsList()
+  },
   onPullDownRefresh () {
-  //  加载第一页
+    this.isFixed = false
+    //  加载第一页
     this.reload()
+  },
+  onPageScroll () {
+    this.isFixed = true
   },
   // 上拉加载下一页
   onReachBottom () {
     this.pageNum++
     this.queryGoodsList()
   },
-  onLoad (options) {
-    this.query = options.query
-    // 查询商品列表
-    this.queryGoodsList()
-  },
   methods: {
     reload () {
       //  加载第一页
       this.pageNum = 1
+      this.isLastPage = false
+      this.isRequest = false
       this.goodsList = []
       this.queryGoodsList()
     },
@@ -102,6 +111,15 @@ export default {
 </script>
 
 <style lang="less">
+.topHeader{
+  position: static;
+  top:0;
+  width: 100%;
+  background-color: #fff;
+}
+.goods-list{
+  margin-top:220rpx;
+}
 .header {
   height: 120rpx;
   padding: 0 16rpx;
