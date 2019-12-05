@@ -1,10 +1,11 @@
 <template>
   <div>
     <div class="topHeader" :style="{position:isFixed?'fixed':'static'}">
-      <div class="header">
+      <!-- <div class="header">
       <icon type="search" size="16" color="#bdbdbd"> </icon>
       <input type="text" v-model="query" @confirm="reload" confirm-type="search"/>
-    </div>
+    </div> -->
+    <SearchBar @confirm="search" :query="query"/>
 
     <!-- 过滤栏 -->
     <ul class="filter-menu">
@@ -38,8 +39,12 @@
 </template>
 
 <script>
+import SearchBar from '@/components/SearchBar'
 const PAGE_SIZE = 6
 export default {
+  components: {
+    SearchBar
+  },
   data () {
     return {
       menuList: ['综合', '销量', '价格'],
@@ -68,6 +73,10 @@ export default {
     this.queryGoodsList()
   },
   methods: {
+    search (data) {
+      this.query = data
+      this.reload()
+    },
     // 去到商品详情
     toItem (id) {
       wx.navigateTo({ url: '/pages/item/main?id=' + id })

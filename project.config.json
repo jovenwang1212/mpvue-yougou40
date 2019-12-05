@@ -57,6 +57,13 @@
 					"pathName": "pages/item/main",
 					"query": "id=542",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "搜索",
+					"pathName": "pages/search/main",
+					"query": "",
+					"scene": null
 				}
 			]
 		}
