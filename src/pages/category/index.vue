@@ -17,7 +17,7 @@
         <img src="/static/images/titleImage.png" alt="" />
         <ul>
           <li class="cate2" v-for="(cate2, index2) in categories[activeIndex].children" :key="index2">
-            <p v-if="cate2.children.length">/<span>{{cate2.cat_name}}</span>/</p>
+            <p v-if="cate2.children&&cate2.children.length">/<span>{{cate2.cat_name}}</span>/</p>
             <ul>
               <li class="cate3" v-for="(cate3, index3) in cate2.children" :key="index3"
               @click="toSearchList(cate3.cat_name)">

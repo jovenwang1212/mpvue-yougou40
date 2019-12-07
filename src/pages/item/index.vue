@@ -61,11 +61,11 @@
         <span>联系客服</span>
         <button open-type="contact">联系客服</button>
       </div>
-      <div class="icon-text">
+      <div class="icon-text" @click="toCart">
         <span class="iconfont icon-cart"></span>
         <span>购物车</span>
       </div>
-      <div class="btn add-cart-btn">加入购物车</div>
+      <div class="btn add-cart-btn" @click="add2Cart">加入购物车</div>
       <div class="btn buy-btn">立即购买</div>
     </div>
   </div>
@@ -91,6 +91,24 @@ export default {
     }
   },
   methods: {
+    add2Cart () {
+      // 先取，更新，再存
+      let cart = wx.getStorageSync('cart') || {}
+      // 更新
+      let goodsId = this.goods.goods_id
+
+      // 如果第一次添加，Num:1,否则Num++
+      cart[goodsId] = {
+        num: cart[goodsId] ? ++cart[goodsId].num : 1,
+        checked: true // 只要添加checked都为true
+      }
+
+      wx.setStorageSync('cart', cart)
+    },
+    // 跳转购物车
+    toCart () {
+      wx.switchTab({ url: '/pages/cart/main' })
+    },
     prevImg (index) {
       let urls = []
       this.goods.pics.forEach(v => {
