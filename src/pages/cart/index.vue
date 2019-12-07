@@ -35,7 +35,7 @@
         <p>合计:<span class="num">￥{{totalPrice}}.00</span></p>
         <p class="info">包含运费</p>
       </div>
-      <div class="account-btn">结算({{totalNum}})</div>
+      <div class="account-btn" @click="doAccount">结算({{totalNum}})</div>
     </div>
   </div>
 </template>
@@ -62,6 +62,24 @@ export default {
     wx.setStorageSync('cart', cart)
   },
   methods: {
+    doAccount () {
+      // 商品数量为0
+      if (!this.totalNum) {
+        wx.showToast({
+          title: '请选择商品',
+          icon: 'none'
+        })
+        return
+      }
+      // 如果没登陆跳转登陆
+      let token = wx.getStorageSync('token')
+      if (!token) {
+        wx.navigateTo({ url: '/pages/login/main' })
+        return
+      }
+      // 跳转支付
+      wx.navigateTo({ url: '/pages/pay/main' })
+    },
     getGoodsList () {
       let cart = wx.getStorageSync('cart')
       // 如果购物车数据是空的，return
