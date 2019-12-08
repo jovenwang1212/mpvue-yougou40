@@ -49,7 +49,8 @@ export default {
       goodsList: []
     }
   },
-  onLoad () {
+  onLoad (options) {
+    this.goodsId = options.goodsId
     this.getGoodsList()
   },
   methods: {
@@ -70,13 +71,6 @@ export default {
         })
         return
       }
-
-      this.token = wx.getStorageSync('token')
-      if (!this.token) {
-        wx.navigateTo({ url: '/pages/login/main' })
-        return
-      }
-
       // 创建订单
       this.createOrder()
     },
@@ -84,9 +78,7 @@ export default {
       this.$request({
         url: '/api/public/v1/my/orders/create',
         method: 'POST',
-        header: {
-          Authorization: this.token
-        },
+        isAuth: true,
         data: {
           order_price: this.totalPrice,
           consignee_addr: this.detailAddr,
@@ -96,7 +88,9 @@ export default {
         // console.log(data)
         this.orderNumber = data.order_number
         // 订单创建成功，无论是否支付，都把checked的商品去掉
-        this.arrangeCart()
+        if (!this.gooodsId) {
+          this.arrangeCart()
+        }
         this.doPay()
       })
     },
@@ -113,9 +107,7 @@ export default {
       this.$request({
         url: '/api/public/v1/my/orders/req_unifiedorder',
         method: 'POST',
-        header: {
-          Authorization: this.token
-        },
+        isAuth: true,
         data: {
           order_number: this.orderNumber
         }
@@ -155,6 +147,15 @@ export default {
     },
     getGoodsList () {
       let cart = wx.getStorageSync('cart')
+      // 保证立即购买的情况和原来的逻辑一样
+      if (this.goodsId) {
+        cart = {
+          [this.goodsId]: {
+            num: 1,
+            checked: true
+          }
+        }
+      }
       // 只有购物车里面checked的商品才展示在商品列表里面
       let ids = this.filterCart(cart)
 

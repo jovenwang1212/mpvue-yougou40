@@ -51,7 +51,7 @@
         >
       </div>
       <div class="main">
-        <div v-show="activeIndex===0" v-html="goods.goods_introduce"></div>
+        <div v-show="activeIndex === 0" v-html="goods.goods_introduce"></div>
         <div v-show="activeIndex">商品参数</div>
       </div>
     </div>
@@ -66,7 +66,7 @@
         <span>购物车</span>
       </div>
       <div class="btn add-cart-btn" @click="add2Cart">加入购物车</div>
-      <div class="btn buy-btn">立即购买</div>
+      <div class="btn buy-btn" @click="toBuy">立即购买</div>
     </div>
   </div>
 </template>
@@ -91,6 +91,10 @@ export default {
     }
   },
   methods: {
+    toBuy () {
+      // 跳转支付页面，并带上goodsId
+      wx.navigateTo({ url: '/pages/pay/main?goodsId=' + this.goods.goods_id })
+    },
     add2Cart () {
       // 先取，更新，再存
       let cart = wx.getStorageSync('cart') || {}
@@ -184,9 +188,9 @@ export default {
       flex-direction: column;
       align-items: center;
       position: relative;
-      button{
+      button {
         position: absolute;
-        top:0;
+        top: 0;
         opacity: 0;
       }
     }
@@ -271,9 +275,9 @@ export default {
     align-items: center;
     justify-content: center;
     position: relative;
-    button{
+    button {
       position: absolute;
-      top:0;
+      top: 0;
       opacity: 0;
     }
   }

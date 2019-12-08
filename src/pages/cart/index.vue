@@ -49,6 +49,10 @@ export default {
   },
   onShow () {
     this.getGoodsList()
+    wx.setTabBarBadge({
+      index: 2,
+      text: Object.keys(wx.getStorageSync('cart')).length.toString()
+    })
   },
   onHide () {
     // storage里面的cart同步goodsList
