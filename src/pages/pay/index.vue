@@ -95,13 +95,7 @@ export default {
       })
     },
     arrangeCart () {
-      let cart = wx.getStorageSync('cart')
-      for (let key in cart) {
-        if (cart[key].checked) {
-          delete cart[key]
-        }
-      }
-      wx.setStorageSync('cart', cart)
+      this.$store.commit('arrangeCart')
     },
     doPay () {
       this.$request({
@@ -148,7 +142,7 @@ export default {
       return ids.join(',')
     },
     getGoodsList () {
-      let cart = wx.getStorageSync('cart')
+      let cart = this.$store.getters.getCart
       // 保证立即购买的情况和原来的逻辑一样
       if (this.goodsId) {
         cart = {

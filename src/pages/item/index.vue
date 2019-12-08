@@ -96,18 +96,8 @@ export default {
       wx.navigateTo({ url: '/pages/pay/main?goodsId=' + this.goods.goods_id })
     },
     add2Cart () {
-      // 先取，更新，再存
-      let cart = wx.getStorageSync('cart') || {}
-      // 更新
       let goodsId = this.goods.goods_id
-
-      // 如果第一次添加，Num:1,否则Num++
-      cart[goodsId] = {
-        num: cart[goodsId] ? ++cart[goodsId].num : 1,
-        checked: true // 只要添加checked都为true
-      }
-
-      wx.setStorageSync('cart', cart)
+      this.$store.commit('add2Cart', goodsId)
     },
     // 跳转购物车
     toCart () {

@@ -1,5 +1,10 @@
 <script>
-export default {}
+export default {
+  onHide () {
+    // console.log('on hide')
+    this.$store.commit('storeCart')
+  }
+}
 </script>
 
 <style>

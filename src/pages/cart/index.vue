@@ -48,6 +48,8 @@ export default {
     }
   },
   onShow () {
+    // 发请求之前，需要重置goodsList
+    this.goodsList = []
     this.getGoodsList()
     wx.setTabBarBadge({
       index: 2,
@@ -55,15 +57,7 @@ export default {
     })
   },
   onHide () {
-    // storage里面的cart同步goodsList
-    let cart = {}
-    this.goodsList.forEach(v => {
-      cart[v.goods_id] = {
-        num: v.num,
-        checked: v.checked
-      }
-    })
-    wx.setStorageSync('cart', cart)
+    this.$store.commit('updateCart', this.goodsList)
   },
   methods: {
     doAccount () {
@@ -85,11 +79,9 @@ export default {
       wx.navigateTo({ url: '/pages/pay/main' })
     },
     getGoodsList () {
-      let cart = wx.getStorageSync('cart')
+      let cart = this.$store.getters.getCart
       // 如果购物车数据是空的，return
       if (!cart) {
-        // 如果购物车是空的，需要重置goodsList
-        this.goodsList = []
         return
       }
       this.$request({
