@@ -88,6 +88,8 @@ export default {
       let cart = wx.getStorageSync('cart')
       // 如果购物车数据是空的，return
       if (!cart) {
+        // 如果购物车是空的，需要重置goodsList
+        this.goodsList = []
         return
       }
       this.$request({

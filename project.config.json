@@ -83,6 +83,21 @@
 					"id": -1,
 					"name": "支付",
 					"pathName": "pages/pay/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "我的",
+					"pathName": "pages/me/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "订单列表",
+					"pathName": "pages/order/main",
+					"query": "",
 					"scene": null
 				}
 			]

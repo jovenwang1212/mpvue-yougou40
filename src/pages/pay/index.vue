@@ -116,10 +116,12 @@ export default {
         wx.requestPayment({
           ...data.pay,
           success (res) {
-            console.log('成功支付')
+            // console.log('成功支付')
+            wx.navigateTo({ url: '/pages/order_result/main' })
           },
-          fail (res) {
+          fail: (res) => {
             console.log('支付失败')
+            wx.navigateTo({ url: '/pages/order_result/main?orderNumber=' + this.orderNumber })
           }
         })
       })

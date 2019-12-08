@@ -8,19 +8,19 @@ function request (options) {
       mask: true
     })
   }
-  // 如果options里面有isAuth，就传token
-  // 如果无须登录态，token传空也可以的
-  let token = ''
-  if (options.isAuth) {
-    token = wx.getStorageSync('token')
-    // 如果需要登录态，但是没有token，跳转登录
-    if (!token) {
-      wx.navigateTo({ url: '/pages/login/main' })
-      return
-    }
-  }
-
   return new Promise((resolve, reject) => {
+    // 如果options里面有isAuth，就传token
+  // 如果无须登录态，token传空也可以的
+    let token = ''
+    if (options.isAuth) {
+      token = wx.getStorageSync('token')
+      // 如果需要登录态，但是没有token，跳转登录
+      if (!token) {
+        wx.navigateTo({ url: '/pages/login/main' })
+        reject(new Error('登录'))
+      }
+    }
+
     wx.request({
       url: BASE_URL + options.url,
       data: options.data,
